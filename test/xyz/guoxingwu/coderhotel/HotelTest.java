@@ -2,11 +2,13 @@ package xyz.guoxingwu.coderhotel;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class HotelTest {
     @Test
-    void hotelInitialization(){
+    void hotelInitialization() throws IOException {
         Hotel hotel = new Hotel();
         assertAll(
                 "assert the hotel has all the clock",
@@ -19,7 +21,7 @@ class HotelTest {
     }
 
     @Test
-    void hotelClockTimeCheck(){
+    void hotelClockTimeCheck() throws IOException {
         Hotel hotel = new Hotel();
         UTCClock utcClock = new UTCClock();
         assertAll(
@@ -30,13 +32,6 @@ class HotelTest {
                 () -> assertEquals(-5,hotel.getHotelClocks().get(3).getHour() - utcClock.getHour()),
                 () -> assertEquals(10,hotel.getHotelClocks().get(4).getHour() - utcClock.getHour())
         );
-    }
-
-    @Test
-    void phonePlaceTest(){
-        PhoneClock phoneClock = new PhoneClock();
-        System.out.println(phoneClock.getPlace());
-        System.out.println(phoneClock.getTime());
     }
 
 }

@@ -1,6 +1,7 @@
 package xyz.guoxingwu.coderhotel;
 
 import org.junit.jupiter.api.Test;
+import sun.nio.cs.ext.PCK;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -69,23 +70,25 @@ class HotelClockTest {
     }
 
     @Test
-    void updateTimeTest2(){
+    void updateTimeTest2() {
         PhoneClock phoneClock = new PhoneClock();
-        assertEquals("±±¾©",phoneClock.getPlace());
-        HotelClock hotelClock = new HotelClock("Â×¶Ø",phoneClock);
+        assertEquals("±±¾©", phoneClock.getPlace());
+        HotelClock hotelClock = new HotelClock("Â×¶Ø", phoneClock);
         hotelClock.setHour(234);
         hotelClock.updateTime();
-        assertEquals(8,phoneClock.getHour() - hotelClock.getHour());
+        assertEquals(8, phoneClock.getHour() - hotelClock.getHour());
     }
 
+
+//    has defect
     @Test
-    void updateTimeTest3(){
+    void updateTimeTest3() {
         PhoneClock phoneClock = new PhoneClock();
         phoneClock.setPlace("Â×¶Ø");
-        assertEquals("Â×¶Ø",phoneClock.getPlace());
-        HotelClock hotelClock = new HotelClock("Â×¶Ø",phoneClock);
+        assertEquals("Â×¶Ø", phoneClock.getPlace());
+        HotelClock hotelClock = new HotelClock("Â×¶Ø", phoneClock);
         hotelClock.setHour(234);
         hotelClock.updateTime();
-        assertEquals(0,phoneClock.getHour() - hotelClock.getHour());
+        assertEquals(0, phoneClock.getHour() - hotelClock.getHour());
     }
 }

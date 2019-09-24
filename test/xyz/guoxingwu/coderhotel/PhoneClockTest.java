@@ -2,6 +2,8 @@ package xyz.guoxingwu.coderhotel;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class PhoneClockTest {
@@ -15,5 +17,15 @@ class PhoneClockTest {
                 () -> assertEquals("±±¾©",phoneClock.getPlace()),
                 () -> assertEquals(8,phoneClock.getHour() - utcClock.getHour())
         );
+    }
+
+
+//    has defect
+    @Test
+    void setTime() throws IOException {
+        PhoneClock phoneClock = new PhoneClock();
+        HotelClock hotelClock = new HotelClock("Â×¶Ø",phoneClock);
+        phoneClock.setHour(40);
+        assertEquals(8,hotelClock.getHour()-phoneClock.getHour());
     }
 }

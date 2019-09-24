@@ -1,7 +1,6 @@
 package xyz.guoxingwu.coderhotel;
 
-import jdk.jfr.StackTrace;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -33,9 +32,10 @@ public class Hotel {
         this.servantClock = servantClock;
     }
 
-    public Hotel() {
+    public Hotel() throws IOException {
         ArrayList<HotelClock> hotelClocks = new ArrayList<>();
         PhoneClock phoneClock = new PhoneClock();
+        while(!phoneClock.setTime());
         hotelClocks.add(0,new HotelClock("北京",phoneClock));
         hotelClocks.add(1,new HotelClock("伦敦",phoneClock));
         hotelClocks.add(2,new HotelClock("莫斯科",phoneClock));
@@ -47,22 +47,22 @@ public class Hotel {
     }
 
     public void clockRun() throws InterruptedException {
-        int incTime;
+        int incTime, round;
         Scanner scanner = new Scanner(System.in);
         for(incTime=0;incTime<Integer.MAX_VALUE;incTime++){
-            for (HotelClock hotelClock:hotelClocks
-                 ) {
-                hotelClock.timePassOneStep();
-            }
-            servantClock.timePassOneStep();
             System.out.println("press number '0' to ask the servant to calibration the hotel clocks");
-            System.out.println("press number '1' to move to the next time round");
-            if(scanner.nextInt()==0)
+            System.out.println("press number 'n' to move 'n' time round");
+            System.out.println();
+            round = scanner.nextInt();
+            if(round==0)
                 servantClock.notifyAllHotelClock();
+            else{
+                servantClock.timePassNStep(round);
+            }
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Hotel hotel = new Hotel();
         try{
             hotel.clockRun();

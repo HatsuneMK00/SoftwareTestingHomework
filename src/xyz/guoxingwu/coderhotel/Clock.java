@@ -1,5 +1,7 @@
 package xyz.guoxingwu.coderhotel;
 
+
+// Clock为酒店时钟和手机时钟的父类 使用模板方法模式
 public abstract class Clock {
     protected int second;
     protected int minute;
@@ -17,11 +19,18 @@ public abstract class Clock {
         hour = 13;
     }
 
-    public void timePassOneStep(){
+    public void timePassOneStep() {
         timeInc();
     }
 
-    public String getTime(){
+    public void timePassNStep(int n) {
+        int i;
+        for (i = 0; i < n; i++) {
+            timeInc();
+        }
+    }
+
+    public String getTime() {
         return (hour + " : " + minute + " : " + second);
     }
 
