@@ -11,60 +11,81 @@ import static org.junit.jupiter.api.Assertions.*;
 class HotelClockTest {
 
     @Test
-    void updateTime() {
-        PhoneClock phoneClock = new PhoneClock(20,20,20);
-        List<String> cityList = Arrays.asList("北京","伦敦","莫斯科","悉尼","纽约");
-        for (String city:cityList
-             ) {
-            HotelClock hotelClock = new HotelClock(10,10,10,city,phoneClock);
+    void updateTimeTest1() {
+        PhoneClock phoneClock = new PhoneClock(20, 20, 20);
+        List<String> cityList = Arrays.asList("北京", "伦敦", "莫斯科", "悉尼", "纽约");
+        for (String city : cityList
+        ) {
+            HotelClock hotelClock = new HotelClock(10, 10, 10, city, phoneClock);
             hotelClock.updateTime();
             switch (hotelClock.getPlace()) {
-                case "北京":{
+                case "北京": {
                     assertAll(
                             "assert all the hotel clock can be adjusted correctly by servant's phone clock",
-                            () -> assertEquals(0,phoneClock.getHour()-hotelClock.getHour()),
-                            () -> assertEquals(0,phoneClock.getMinute()-hotelClock.getMinute()),
-                            () -> assertEquals(0,phoneClock.getSecond()-hotelClock.getSecond())
+                            () -> assertEquals(0, phoneClock.getHour() - hotelClock.getHour()),
+                            () -> assertEquals(0, phoneClock.getMinute() - hotelClock.getMinute()),
+                            () -> assertEquals(0, phoneClock.getSecond() - hotelClock.getSecond())
                     );
                     break;
                 }
-                case "莫斯科":{
+                case "莫斯科": {
                     assertAll(
                             "assert all the hotel clock can be adjusted correctly by servant's phone clock",
-                            () -> assertEquals(4,phoneClock.getHour()-hotelClock.getHour()),
-                            () -> assertEquals(0,phoneClock.getMinute()-hotelClock.getMinute()),
-                            () -> assertEquals(0,phoneClock.getSecond()-hotelClock.getSecond())
+                            () -> assertEquals(4, phoneClock.getHour() - hotelClock.getHour()),
+                            () -> assertEquals(0, phoneClock.getMinute() - hotelClock.getMinute()),
+                            () -> assertEquals(0, phoneClock.getSecond() - hotelClock.getSecond())
                     );
                     break;
                 }
-                case "伦敦":{
+                case "伦敦": {
                     assertAll(
                             "assert all the hotel clock can be adjusted correctly by servant's phone clock",
-                            () -> assertEquals(8,phoneClock.getHour()-hotelClock.getHour()),
-                            () -> assertEquals(0,phoneClock.getMinute()-hotelClock.getMinute()),
-                            () -> assertEquals(0,phoneClock.getSecond()-hotelClock.getSecond())
+                            () -> assertEquals(8, phoneClock.getHour() - hotelClock.getHour()),
+                            () -> assertEquals(0, phoneClock.getMinute() - hotelClock.getMinute()),
+                            () -> assertEquals(0, phoneClock.getSecond() - hotelClock.getSecond())
                     );
                     break;
                 }
-                case "纽约":{
+                case "纽约": {
                     assertAll(
                             "assert all the hotel clock can be adjusted correctly by servant's phone clock",
-                            () -> assertEquals(13,phoneClock.getHour()-hotelClock.getHour()),
-                            () -> assertEquals(0,phoneClock.getMinute()-hotelClock.getMinute()),
-                            () -> assertEquals(0,phoneClock.getSecond()-hotelClock.getSecond())
+                            () -> assertEquals(13, phoneClock.getHour() - hotelClock.getHour()),
+                            () -> assertEquals(0, phoneClock.getMinute() - hotelClock.getMinute()),
+                            () -> assertEquals(0, phoneClock.getSecond() - hotelClock.getSecond())
                     );
                     break;
                 }
-                case "悉尼":{
+                case "悉尼": {
                     assertAll(
                             "assert all the hotel clock can be adjusted correctly by servant's phone clock",
-                            () -> assertEquals(-2,phoneClock.getHour()-hotelClock.getHour()),
-                            () -> assertEquals(0,phoneClock.getMinute()-hotelClock.getMinute()),
-                            () -> assertEquals(0,phoneClock.getSecond()-hotelClock.getSecond())
+                            () -> assertEquals(-2, phoneClock.getHour() - hotelClock.getHour()),
+                            () -> assertEquals(0, phoneClock.getMinute() - hotelClock.getMinute()),
+                            () -> assertEquals(0, phoneClock.getSecond() - hotelClock.getSecond())
                     );
                     break;
                 }
-            }
             }
         }
     }
+
+    @Test
+    void updateTimeTest2(){
+        PhoneClock phoneClock = new PhoneClock();
+        assertEquals("北京",phoneClock.getPlace());
+        HotelClock hotelClock = new HotelClock("伦敦",phoneClock);
+        hotelClock.setHour(234);
+        hotelClock.updateTime();
+        assertEquals(8,phoneClock.getHour() - hotelClock.getHour());
+    }
+
+    @Test
+    void updateTimeTest3(){
+        PhoneClock phoneClock = new PhoneClock();
+        phoneClock.setPlace("伦敦");
+        assertEquals("伦敦",phoneClock.getPlace());
+        HotelClock hotelClock = new HotelClock("伦敦",phoneClock);
+        hotelClock.setHour(234);
+        hotelClock.updateTime();
+        assertEquals(0,phoneClock.getHour() - hotelClock.getHour());
+    }
+}

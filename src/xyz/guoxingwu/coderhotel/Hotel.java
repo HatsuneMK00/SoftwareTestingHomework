@@ -1,8 +1,11 @@
 package xyz.guoxingwu.coderhotel;
 
+import jdk.jfr.StackTrace;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
 
 // the Observer Pattern User
 public class Hotel {
@@ -67,4 +70,5 @@ public class Hotel {
             e.printStackTrace();
         }
     }
+
 }

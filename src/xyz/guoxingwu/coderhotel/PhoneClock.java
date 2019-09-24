@@ -10,9 +10,13 @@ public class PhoneClock extends Clock {
 
     public PhoneClock(int second, int minute, int hour) {
         super(second, minute, hour);
+        this.place = "北京";
+        this.beiJingOffset = 0;
     }
 
     public PhoneClock() {
+        this.place = "北京";
+        this.beiJingOffset = 0;
     }
 
     public List<HotelClock> getObserverClocks() {

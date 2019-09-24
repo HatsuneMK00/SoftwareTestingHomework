@@ -32,4 +32,11 @@ class HotelTest {
         );
     }
 
+    @Test
+    void phonePlaceTest(){
+        PhoneClock phoneClock = new PhoneClock();
+        System.out.println(phoneClock.getPlace());
+        System.out.println(phoneClock.getTime());
+    }
+
 }
