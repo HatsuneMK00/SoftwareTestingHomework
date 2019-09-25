@@ -1,6 +1,5 @@
-package xyz.guoxingwu.coderhotel;
+package xyz.guoxingwu.coderhotel.clock;
 
-import java.util.Observer;
 import java.util.Random;
 
 public class HotelClock extends Clock {
@@ -55,11 +54,11 @@ public class HotelClock extends Clock {
     @Override
     void timeInc() {
         Random random = new Random(System.currentTimeMillis() + beiJingOffset);
-        // 8% one second slower that the standard clock(phone clock)
-        // 8% one second faster that the standard clock(phone clock)
+        // 12% one second slower that the standard clock(phone clock)
+        // 12% one second faster that the standard clock(phone clock)
         int tempRandom = random.nextInt(100);
-        if (tempRandom >= 8 && tempRandom < 92) second++;
-        else if (tempRandom >= 92) second = second + 2;
+        if (tempRandom >= 12 && tempRandom < 88) second++;
+        else if (tempRandom >= 88) second = second + 2;
         if (second >= 60) {
             minute++;
             second = 0;
@@ -71,14 +70,8 @@ public class HotelClock extends Clock {
     }
 
     void updateTime(){
-        System.out.println(getPlace() + ": the current time is " + getTime());
-        System.out.println("Phone: the current time is " + observeeClock.getTime());
         this.second = observeeClock.getSecond();
         this.minute = observeeClock.getMinute();
-        this.hour = observeeClock.getHour() + beiJingOffset;
-        System.out.println("calibration complete");
-        System.out.println(getPlace() + ": the current time is " + getTime());
-        System.out.println("Phone: the current time is " + observeeClock.getTime());
-        System.out.println();
+        this.hour = observeeClock.getHour() - observeeClock.getBeiJingOffset() + beiJingOffset;
     }
 }

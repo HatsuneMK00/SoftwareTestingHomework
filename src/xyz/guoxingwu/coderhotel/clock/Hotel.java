@@ -1,4 +1,6 @@
-package xyz.guoxingwu.coderhotel;
+package xyz.guoxingwu.coderhotel.clock;
+
+import xyz.guoxingwu.coderhotel.factory.HotelFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,9 +13,7 @@ public class Hotel {
     private List<HotelClock> hotelClocks = new ArrayList<HotelClock>();
     private PhoneClock servantClock;
 
-    public Hotel(List<HotelClock> hotelClocks, PhoneClock servantClock) {
-        this.hotelClocks = hotelClocks;
-        this.servantClock = servantClock;
+    public Hotel() {
     }
 
     public List<HotelClock> getHotelClocks() {
@@ -32,20 +32,6 @@ public class Hotel {
         this.servantClock = servantClock;
     }
 
-    public Hotel() throws IOException {
-        ArrayList<HotelClock> hotelClocks = new ArrayList<>();
-        PhoneClock phoneClock = new PhoneClock();
-        while(!phoneClock.setTime());
-        hotelClocks.add(0,new HotelClock("北京",phoneClock));
-        hotelClocks.add(1,new HotelClock("伦敦",phoneClock));
-        hotelClocks.add(2,new HotelClock("莫斯科",phoneClock));
-        hotelClocks.add(3,new HotelClock("纽约",phoneClock));
-        hotelClocks.add(4,new HotelClock("悉尼",phoneClock));
-        phoneClock.setObserverClocks(hotelClocks);
-        this.servantClock = phoneClock;
-        this.hotelClocks = hotelClocks;
-    }
-
     public void clockRun() throws InterruptedException {
         int incTime, round;
         Scanner scanner = new Scanner(System.in);
@@ -58,17 +44,18 @@ public class Hotel {
                 servantClock.notifyAllHotelClock();
             else{
                 servantClock.timePassNStep(round);
+                for (HotelClock hotelClock:hotelClocks
+                     ) {
+                    hotelClock.timePassNStep(round);
+                }
             }
         }
     }
 
-    public static void main(String[] args) throws IOException {
-        Hotel hotel = new Hotel();
-        try{
-            hotel.clockRun();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+    public static void main(String[] args) throws Exception {
+        HotelFactory hotelFactory = new HotelFactory();
+        Hotel hotel = hotelFactory.createHotel();
+        hotel.clockRun();
     }
 
 }

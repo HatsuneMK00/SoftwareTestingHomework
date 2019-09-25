@@ -1,4 +1,4 @@
-package xyz.guoxingwu.coderhotel;
+package xyz.guoxingwu.coderhotel.clock;
 
 public class UTCClock extends Clock {
     private int beiJingOffset = -8;

@@ -1,8 +1,15 @@
-package xyz.guoxingwu.coderhotel;
+package xyz.guoxingwu.coderhotel.clock;
 
 import org.junit.jupiter.api.Test;
+import sun.nio.cs.ext.PCK;
+import xyz.guoxingwu.coderhotel.clock.HotelClock;
+import xyz.guoxingwu.coderhotel.clock.PhoneClock;
+import xyz.guoxingwu.coderhotel.clock.UTCClock;
+import xyz.guoxingwu.coderhotel.factory.HotelFactory;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,13 +26,13 @@ class PhoneClockTest {
         );
     }
 
-
-//    has defect
     @Test
-    void setTime() throws IOException {
+    void setTime(){
         PhoneClock phoneClock = new PhoneClock();
         HotelClock hotelClock = new HotelClock("Â×¶Ø",phoneClock);
-        phoneClock.setHour(40);
-        assertEquals(8,hotelClock.getHour()-phoneClock.getHour());
+        HotelFactory hotelFactory = new HotelFactory();
+        phoneClock.setHour(40); // a part of setTime
+        Hotel hotel = hotelFactory.createHotel(Arrays.asList(hotelClock),phoneClock);
+        assertEquals(-8,hotelClock.getHour() - phoneClock.getHour());
     }
 }

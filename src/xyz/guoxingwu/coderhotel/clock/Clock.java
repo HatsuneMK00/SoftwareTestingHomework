@@ -1,4 +1,4 @@
-package xyz.guoxingwu.coderhotel;
+package xyz.guoxingwu.coderhotel.clock;
 
 
 // Clock为酒店时钟和手机时钟的父类 使用模板方法模式

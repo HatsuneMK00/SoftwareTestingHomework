@@ -1,6 +1,6 @@
-package xyz.guoxingwu.coderhotel;
+package xyz.guoxingwu.coderhotel.clock;
 
-import javafx.scene.layout.StackPane;
+import xyz.guoxingwu.coderhotel.exception.NullHotelClockException;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -25,21 +25,25 @@ public class PhoneClock extends Clock {
         this.beiJingOffset = 0;
     }
 
+    public int getBeiJingOffset() {
+        return beiJingOffset;
+    }
+
     public boolean setTime() throws IOException {
         String customizedTime;
         String[] parsedTime = null;
         System.out.println("input the time in the form of hh-mm-ss");
         System.out.print("your time: ");
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        if((customizedTime=in.readLine())!=null){
+        if ((customizedTime = in.readLine()) != null) {
             parsedTime = customizedTime.split("-");
         }
-        int hour,minute,second;
+        int hour, minute, second;
         assert parsedTime != null;
         hour = Integer.parseInt(parsedTime[0]);
         minute = Integer.parseInt(parsedTime[1]);
         second = Integer.parseInt(parsedTime[2]);
-        if(hour<0||minute<0||minute>60||second<0||second>60){
+        if (hour < 0 || minute < 0 || minute > 60 || second < 0 || second > 60) {
             System.out.println("time format wrong");
             return false;
         }
@@ -74,33 +78,50 @@ public class PhoneClock extends Clock {
     @Override
     void timeInc() {
         second++;
-        if(second>=60){
+        if (second >= 60) {
             minute++;
-            second=0;
-            if(minute>=60){
+            second = 0;
+            if (minute >= 60) {
                 hour++;
-                minute=0;
+                minute = 0;
             }
         }
     }
 
-    private boolean isHotelClockAccurate(HotelClock hotelClock){
+    private boolean isHotelClockAccurate(HotelClock hotelClock) {
         return (this.second == hotelClock.getSecond()
                 && this.minute == hotelClock.getMinute()
                 && this.hour == hotelClock.getHour() - hotelClock.getBeiJingOffset());
     }
 
-    public void notifyAllHotelClock(){
-        for (HotelClock hotelClock:observerClocks
-             ) {
-            if(!isHotelClockAccurate(hotelClock)){
+    public void notifyAllHotelClock() {
+        for (HotelClock hotelClock : observerClocks
+        ) {
+            if (!isHotelClockAccurate(hotelClock)) {
+                System.out.println(hotelClock.getPlace() + ": the current time is " + hotelClock.getTime());
+                System.out.println("Phone: the current time is " + getTime());
+
                 hotelClock.updateTime();
-            }else{
+
+                System.out.println("calibration complete");
+                System.out.println(hotelClock.getPlace() + ": the current time is " + hotelClock.getTime());
+                System.out.println("Phone: the current time is " + getTime());
+                System.out.println();
+            } else {
                 System.out.println(hotelClock.getPlace() + ": the clock is accurate");
                 System.out.println(hotelClock.getPlace() + ": the current time is " + hotelClock.getTime());
                 System.out.println("Phone: the current time is " + getTime());
                 System.out.println();
             }
+        }
+    }
+
+    public void notifyAllHotelClockToInitialize(){
+        for (HotelClock hotelClock : observerClocks
+        ) {
+            System.out.println(hotelClock.getPlace() + ": Hotel Clock initializing");
+            hotelClock.updateTime();
+            System.out.println();
         }
     }
 }

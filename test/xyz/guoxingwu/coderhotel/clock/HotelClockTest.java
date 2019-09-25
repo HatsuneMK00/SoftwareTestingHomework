@@ -1,9 +1,9 @@
-package xyz.guoxingwu.coderhotel;
+package xyz.guoxingwu.coderhotel.clock;
 
 import org.junit.jupiter.api.Test;
-import sun.nio.cs.ext.PCK;
+import xyz.guoxingwu.coderhotel.clock.HotelClock;
+import xyz.guoxingwu.coderhotel.clock.PhoneClock;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -90,5 +90,16 @@ class HotelClockTest {
         hotelClock.setHour(234);
         hotelClock.updateTime();
         assertEquals(0, phoneClock.getHour() - hotelClock.getHour());
+    }
+
+    @Test
+    void timeIncRandom(){
+        PhoneClock phoneClock = new PhoneClock();
+        HotelClock hotelClock1 = new HotelClock("Ï¤Äá",phoneClock);
+        HotelClock hotelClock2 = new HotelClock("Å¦Ô¼",phoneClock);
+        hotelClock1.timePassNStep(10000);
+        hotelClock2.timePassNStep(10000);
+        assertNotEquals(hotelClock1.getSecond(),hotelClock2.getSecond());
+        assertNotEquals(hotelClock1.getMinute(),hotelClock2.getMinute());
     }
 }
