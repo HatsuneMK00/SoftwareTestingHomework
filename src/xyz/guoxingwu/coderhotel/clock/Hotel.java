@@ -33,21 +33,26 @@ public class Hotel {
     }
 
     public void clockRun() throws InterruptedException {
-        int incTime, round;
+        int round;
         Scanner scanner = new Scanner(System.in);
-        for(incTime=0;incTime<Integer.MAX_VALUE;incTime++){
-            System.out.println("press number '0' to ask the servant to calibration the hotel clocks");
-            System.out.println("press number 'n' to move 'n' time round");
+        while(true){
+            System.out.println("input number '0' to ask the servant to calibration the hotel clocks");
+            System.out.println("input number 'n' to move 'n' time round");
+            System.out.println("input number '-1' to end the simulation");
             System.out.println();
             round = scanner.nextInt();
             if(round==0)
                 servantClock.notifyAllHotelClock();
-            else{
+            else if(round>0){
                 servantClock.timePassNStep(round);
                 for (HotelClock hotelClock:hotelClocks
                      ) {
                     hotelClock.timePassNStep(round);
                 }
+            }else if(round==-1){
+                return;
+            }else{
+                System.out.println("please input the right number");
             }
         }
     }
